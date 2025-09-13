@@ -38,8 +38,8 @@ jobs:
           mkdir -p $UB_DIR/arch/arm/configs
           mkdir -p $UB_DIR/arch/arm/dts
           
-          cp config/boards/nsy-g68-plus-rk3568_defconfig $UB_DIR/arch/arm/configs/
-          cp config/boards/rk3308-nsy-g68-plus.dts $UB_DIR/arch/arm/dts/
+          cp config/boards/nsy-g68-plus_defconfig $UB_DIR/arch/arm/configs/
+          cp userpatches/kernel/rk3568-nsy-g68-plus.dts $UB_DIR/arch/arm/dts/
 
       # - name: Apply u-boot patches (optional)
       #   run: |
