@@ -63,7 +63,8 @@ jobs:
           # 复制 defconfig 和 dts
           cp $GITHUB_WORKSPACE/config/boards/nsy-g68-plus_defconfig $UB_DIR/configs/
           cp userpatches/kernel/rk3568-nsy-g68-plus.dts $UB_DIR/arch/arm/dts/
-
+          cp config/boards/nsy-g68-plus_defconfig armbian-build/cache/sources/u-boot/v2022.07/configs/
+          ls -l armbian-build/cache/sources/u-boot/v2022.07/configs/
           # 再次检查
           ls -l $UB_DIR/configs/
           ls -l $UB_DIR/arch/arm/dts/
