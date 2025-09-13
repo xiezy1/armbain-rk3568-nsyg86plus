@@ -45,10 +45,10 @@ jobs:
           # mkdir -p armbian-build/cache/sources/u-boot/v2022.07/configs/
           
           # 现在，将配置文件复制到新创建的目录中。
-          cp config/boards/nsy-g68-plus-rk3568_defconfig armbian-build/cache/sources/u-boot/v2022.07/configs/
+          cp config/boards/nsy-g68-plus-rk3568_defconfig armbian-build/cache/sources/u-boot/2022.07/configs/
           
           # 调试步骤：再次检查目标目录，确认文件已成功复制。
-          ls -l armbian-build/cache/sources/u-boot/v2022.07/configs/
+          ls -l armbian-build/cache/sources/u-boot/2022.07/configs/
       - name: Build Armbian
         run: |
           cd armbian-build
