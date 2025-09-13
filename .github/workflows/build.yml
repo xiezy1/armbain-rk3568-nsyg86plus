@@ -51,13 +51,6 @@ jobs:
       #     ls -l armbian-build/cache/sources/u-boot/2022.07/configs/
       - name: Build Armbian
         run: |
-          UBOOT_SOURCE_DIR="/armbian/cache/sources/u-boot-worktree/u-boot/v2022.07"
-    
-          # 确保目标文件夹存在
-          mkdir -p "${UBOOT_SOURCE_DIR}/configs/"
-          
-          # 复制你的 defconfig 文件
-          cp /armbian/config/boards/nsy-g68-plus-rk3568_defconfig "${UBOOT_SOURCE_DIR}/configs/"
           cd armbian-build
           ./compile.sh BOARD=nsy-g68-plus BRANCH=current RELEASE=bookworm \
                         BUILD_MINIMAL=no BUILD_DESKTOP=no KERNEL_CONFIGURE=no
