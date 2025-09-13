@@ -30,6 +30,9 @@ jobs:
           mkdir -p armbian-build/userpatches
           cp -r userpatches/* armbian-build/userpatches/
 
+      - name: Copy u-boot defconfig
+        run: |
+          cp config/boards/nsy-g68-plus-rk3568_defconfig armbian-build/cache/sources/u-boot/v2022.07/configs/
       # - name: Replace u-boot with Kwiboo version
       #   run: |
       #     rm -rf armbian-build/cache/sources/u-boot/v2022.07
