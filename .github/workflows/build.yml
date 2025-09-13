@@ -26,9 +26,9 @@ jobs:
       - name: Clone Armbian build
         run: |
           git clone --depth=1 https://github.com/xiezy1/build armbian-build
-          cp config/boards/nsy-g68-plus.conf armbian-build/config/boards/
-          mkdir -p armbian-build/userpatches
-          cp -r userpatches/* armbian-build/userpatches/
+          # cp config/boards/nsy-g68-plus.conf armbian-build/config/boards/
+          # mkdir -p armbian-build/userpatches
+          # cp -r userpatches/* armbian-build/userpatches/
 
       # - name: Copy u-boot defconfig
       #   run: |
