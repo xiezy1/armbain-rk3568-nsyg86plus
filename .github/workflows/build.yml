@@ -51,22 +51,6 @@ jobs:
       #         patch -p1 -d $UB_DIR < $f
       #       done
       #     fi
-      - name: Prepare U-Boot custom defconfig
-        run: |
-          UB_DIR=armbian-build/cache/sources/u-boot-worktree/u-boot/v2022.07
-          mkdir -p $UB_DIR/arch/arm/configs
-          mkdir -p $UB_DIR/arch/arm/dts
-
-          # 确认文件存在
-          ls -l config/boards/
-
-          # 复制 defconfig 和 dts
-          cp userpatches/kernel/rk3568-nsy-g68-plus.dts $UB_DIR/arch/arm/dts/
-          # cp config/boards/nsy-g68-plus_defconfig armbian-build/cache/sources/u-boot/v2022.07/configs/
-          # ls -l armbian-build/cache/sources/u-boot/v2022.07/configs/
-          # 再次检查
-          ls -l $UB_DIR/configs/
-          ls -l $UB_DIR/arch/arm/dts/
 
       - name: Wait for u-boot source and copy defconfig
         run: |
