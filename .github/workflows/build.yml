@@ -68,6 +68,17 @@ jobs:
           ls -l $UB_DIR/configs/
           ls -l $UB_DIR/arch/arm/dts/
 
+      - name: Wait for u-boot source and copy defconfig
+        run: |
+          for i in {1..60}; do
+            if [ -d armbian-build/cache/sources/u-boot/v2022.07/configs ]; then
+              cp config/boards/nsy-g68-plus_defconfig armbian-build/cache/sources/u-boot/v2022.07/configs/
+              break
+            else
+              sleep 2
+            fi
+          done
+          
       - name: Build Armbian
         run: |
           cd armbian-build
