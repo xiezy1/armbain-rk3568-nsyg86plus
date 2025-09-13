@@ -32,11 +32,10 @@ jobs:
 
       - name: Replace u-boot with Kwiboo version
         run: |
-          rm -rf armbian-build/cache/sources/u-boot/v2023.07
-          git clone --depth=1 https://github.com/Kwiboo/u-boot-rockchip armbian-build/cache/sources/u-boot/v2023.07
-          cp config/boards/nsy-g68-plus-rk3568_defconfig armbian-build/cache/sources/u-boot/v2023.07/configs/
-          ls armbian-build/cache/sources/u-boot/v2023.07/configs/
-          
+          rm -rf armbian-build/cache/sources/u-boot/v2022.07
+          git clone --depth=1 https://github.com/Kwiboo/u-boot-rockchip armbian-build/cache/sources/u-boot/v2022.07
+          cp config/boards/nsy-g68-plus-rk3568_defconfig armbian-build/cache/sources/u-boot/v2022.07/configs/
+
       - name: Build Armbian
         run: |
           cd armbian-build
