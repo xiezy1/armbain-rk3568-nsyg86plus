@@ -52,16 +52,13 @@ jobs:
       #       done
       #     fi
 
-      - name: Wait for u-boot source and copy defconfig
+      - name: Manually clone u-boot source
         run: |
-          for i in {1..60}; do
-            if [ -d armbian-build/cache/sources/u-boot/v2022.07/configs ]; then
-              cp config/boards/nsy-g68-plus_defconfig armbian-build/cache/sources/u-boot/v2022.07/configs/
-              break
-            else
-              sleep 2
-            fi
-          done
+          git clone --depth=1 -b v2022.07 https://source.denx.de/u-boot/u-boot.git armbian-build/cache/sources/u-boot/v2022.07
+
+      - name: Copy u-boot defconfig
+        run: |
+          cp config/boards/nsy-g68-plus_defconfig armbian-build/cache/sources/u-boot/v2022.07/configs/
 
       - name: Build Armbian
         run: |
