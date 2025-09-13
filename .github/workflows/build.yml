@@ -26,14 +26,19 @@ jobs:
       - name: Clone Armbian build
         run: |
           git clone --depth=1 https://github.com/armbian/build armbian-build
-          cp config/boards/my-rk3568.conf armbian-build/config/boards/
+          cp config/boards/nsy-g68-plus.conf armbian-build/config/boards/
           mkdir -p armbian-build/userpatches
           cp -r userpatches/* armbian-build/userpatches/
 
+          # 在 Clone Armbian build 之后添加如下步骤
+      - name: Replace u-boot with Kwiboo version
+        run: |
+          rm -rf armbian-build/cache/sources/u-boot/v2023.07
+          git clone --depth=1 https://github.com/Kwiboo/u-boot-rockchip armbian-build/cache/sources/u-boot/v2023.07
       - name: Build Armbian
         run: |
           cd armbian-build
-          ./compile.sh BOARD=my-rk3568 BRANCH=current RELEASE=bookworm \
+          ./compile.sh BOARD=nsy-g68-plus BRANCH=current RELEASE=bookworm \
                         BUILD_MINIMAL=no BUILD_DESKTOP=no KERNEL_CONFIGURE=no
 
       - name: Upload to Release

@@ -26,4 +26,15 @@ cd ffmpeg
 make -j$(nproc)
 make install
 
+
+# # ---- Build Rockchip RGA ----
+# echo "[Armbian Custom] Building Rockchip RGA..."
+# cd /usr/local/src
+# git clone --depth=1 https://github.com/rockchip-linux/rga.git
+# cd rga
+# mkdir build && cd build
+# cmake ..
+# make -j$(nproc)
+# make install
+
 ldconfig
