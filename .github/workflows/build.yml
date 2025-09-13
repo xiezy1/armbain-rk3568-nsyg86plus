@@ -61,11 +61,11 @@ jobs:
           ls -l config/boards/
 
           # 复制 defconfig 和 dts
-          cp config/boards/nsy-g68-plus_defconfig $UB_DIR/arch/arm/configs/
+          cp $GITHUB_WORKSPACE/config/boards/nsy-g68-plus_defconfig $UB_DIR/configs/
           cp userpatches/kernel/rk3568-nsy-g68-plus.dts $UB_DIR/arch/arm/dts/
 
           # 再次检查
-          ls -l $UB_DIR/arch/arm/configs/
+          ls -l $UB_DIR/configs/
           ls -l $UB_DIR/arch/arm/dts/
 
       - name: Build Armbian
