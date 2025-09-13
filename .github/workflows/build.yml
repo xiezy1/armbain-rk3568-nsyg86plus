@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-22.04
 
     steps:
-      - name: Checkout
+      - name: Checkout repository
         uses: actions/checkout@v3
 
       - name: Install dependencies
@@ -23,39 +23,43 @@ jobs:
             python3 python3-distutils python3-apt qemu-user-static \
             debootstrap debian-archive-keyring
 
-      - name: Clone Armbian build
+      - name: Clone Armbian build scripts
         run: |
           git clone --depth=1 https://github.com/xiezy1/build armbian-build
-          # cp config/boards/nsy-g68-plus.conf armbian-build/config/boards/
-          # mkdir -p armbian-build/userpatches
-          # cp -r userpatches/* armbian-build/userpatches/
 
-      # - name: Copy u-boot defconfig
+      - name: Copy custom board config
+        run: |
+          mkdir -p armbian-build/config/boards
+          cp config/boards/nsy-g68-plus.conf armbian-build/config/boards/
+
+      - name: Copy u-boot defconfig and DTS
+        run: |
+          UB_DIR=armbian-build/cache/sources/u-boot-worktree/u-boot/v2022.07
+          mkdir -p $UB_DIR/arch/arm/configs
+          mkdir -p $UB_DIR/arch/arm/dts
+          
+          cp config/boards/nsy-g68-plus-rk3568_defconfig $UB_DIR/arch/arm/configs/
+          cp config/boards/rk3308-nsy-g68-plus.dts $UB_DIR/arch/arm/dts/
+
+      # - name: Apply u-boot patches (optional)
       #   run: |
-      #     cp config/boards/nsy-g68-plus-rk3568_defconfig armbian-build/cache/sources/u-boot/2022.07/configs/
-      # - name: Replace u-boot with Kwiboo version
-      #   run: |
-      #     # 清理旧的 U-Boot 源码。
-      #     # rm -rf armbian-build/cache/sources/u-boot/v2022.07
-    
-      #     # 克隆自定义的 U-Boot 仓库。
-      #     # git clone --depth=1 https://github.com/Kwiboo/u-boot-rockchip armbian-build/cache/sources/u-boot/2022.07
-          
-      #     # 💥 新增步骤：创建 configs 文件夹。
-      #     mkdir -p armbian-build/cache/sources/u-boot/2022.07/configs/
-          
-      #     # 现在，将配置文件复制到新创建的目录中。
-      #     cp config/boards/nsy-g68-plus-rk3568_defconfig armbian-build/cache/sources/u-boot/2022.07/configs/
-          
-      #     # 调试步骤：再次检查目标目录，确认文件已成功复制。
-      #     ls -l armbian-build/cache/sources/u-boot/2022.07/configs/
+      #     # 如果你有 patch 文件，可以放在 userpatches/u-boot 下
+      #     PATCH_DIR=userpatches/u-boot
+      #     UB_DIR=armbian-build/cache/sources/u-boot-worktree/u-boot/v2022.07
+      #     if [ -d "$PATCH_DIR" ]; then
+      #       for f in $PATCH_DIR/*.patch; do
+      #         echo "Applying patch $f"
+      #         patch -p1 -d $UB_DIR < $f
+      #       done
+      #     fi
+
       - name: Build Armbian
         run: |
           cd armbian-build
           ./compile.sh BOARD=nsy-g68-plus BRANCH=current RELEASE=bookworm \
                         BUILD_MINIMAL=no BUILD_DESKTOP=no KERNEL_CONFIGURE=no
 
-      - name: Upload to Release
+      - name: Upload built images to release
         uses: softprops/action-gh-release@v1
         with:
           files: armbian-build/output/images/*.img
