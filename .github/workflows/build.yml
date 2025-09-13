@@ -32,7 +32,7 @@ jobs:
 
       - name: Copy u-boot defconfig
         run: |
-          cp config/boards/nsy-g68-plus-rk3568_defconfig armbian-build/cache/sources/u-boot/v2022.07/configs/
+          cp config/boards/nsy-g68-plus-rk3568_defconfig armbian-build/cache/sources/u-boot-worktree/u-boot/v2022.07/configs/
       # - name: Replace u-boot with Kwiboo version
       #   run: |
       #     rm -rf armbian-build/cache/sources/u-boot/v2022.07
