@@ -59,6 +59,7 @@ jobs:
       - name: Copy u-boot defconfig
         run: |
           cp config/boards/nsy-g68-plus_defconfig armbian-build/cache/sources/u-boot/v2022.07/configs/
+          ls -l armbian-build/cache/sources/u-boot/v2022.07/configs/
 
       - name: Build Armbian
         run: |
