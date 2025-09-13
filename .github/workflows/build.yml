@@ -35,10 +35,19 @@ jobs:
       #     cp config/boards/nsy-g68-plus-rk3568_defconfig armbian-build/cache/sources/u-boot/2022.07/configs/
       - name: Replace u-boot with Kwiboo version
         run: |
-          ls -l config/boards/
+          # 清理旧的 U-Boot 源码。
           rm -rf armbian-build/cache/sources/u-boot/2022.07
+    
+          # 克隆自定义的 U-Boot 仓库。
           git clone --depth=1 https://github.com/Kwiboo/u-boot-rockchip armbian-build/cache/sources/u-boot/2022.07
+          
+          # 💥 新增步骤：创建 configs 文件夹。
+          mkdir -p armbian-build/cache/sources/u-boot/2022.07/configs/
+          
+          # 现在，将配置文件复制到新创建的目录中。
           cp config/boards/nsy-g68-plus-rk3568_defconfig armbian-build/cache/sources/u-boot/2022.07/configs/
+          
+          # 调试步骤：再次检查目标目录，确认文件已成功复制。
           ls -l armbian-build/cache/sources/u-boot/2022.07/configs/
       - name: Build Armbian
         run: |
