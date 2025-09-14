@@ -27,8 +27,10 @@ jobs:
         run: |
           git clone --depth=1 https://github.com/armbian/build.git armbian-build
           cp config/boards/nsy-g68-plus.conf armbian-build/config/boards/
-          # cp config/patches/0001-rockchip-add-nsy-g68-plus-support.patch armbian-build/patches/linux/rockchip/
-          # cp rk3568-nsy_g68-bdy_g18.dtb armbian-build/patches/linux/rockchip/dtb/
+          find build/output/debs/ -type d -name "linux-dtb-*" | while read d; do
+              cp ./rk3568-nsy-g68-plus.dtb "$d/boot/dtb/rockchip/"
+          done
+
       - name: Build Armbian
         run: |
           cd armbian-build
@@ -38,7 +40,7 @@ jobs:
       - name: Upload built images to release
         uses: softprops/action-gh-release@v1
         with:
-          tag_name: v1.0.0       # 这里必须是你仓库里存在的 tag
+          tag_name: v1.0.1       # 确保 tag 不存在
           files: armbian-build/output/images/*.img
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GH_PAT }}  # PAT

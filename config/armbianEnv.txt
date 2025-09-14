@@ -1,0 +1,1 @@
+fdtfile=rockchip/rk3568-nsy-g68-plus.dtb
