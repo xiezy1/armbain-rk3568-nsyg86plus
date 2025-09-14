@@ -37,8 +37,29 @@ jobs:
           ./compile.sh BOARD=nsy-g68-plus BRANCH=current RELEASE=bookworm \
                         BUILD_MINIMAL=no BUILD_DESKTOP=no KERNEL_CONFIGURE=no
 
-      - name: Upload existing Armbian image
-        uses: actions/upload-artifact@v4
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Prepare firmware path
+        run: |
+          # 假设编译后的镜像在 armbian-build/output/images/
+          if [ -d armbian-build/output/images ]; then
+            echo "FIRMWARE_PATH=$PWD/armbian-build/output/images" >> $GITHUB_ENV
+          else
+            echo "目录不存在，无法上传镜像"
+            exit 1
+          fi
+
+      - name: Upload Firmware to GitHub Release
+        if: env.FIRMWARE_RELEASE == 'true'
+        uses: ncipollo/release-action@v1
         with:
-          name: armbian-image
-          path: armbian-build/output/images/*.img
+          name: Armbian ${FIRMWARE_TAG}
+          allowUpdates: true
+          tag: ${{ github.ref_name }}-${FIRMWARE_TAG}   # 使用触发的 tag
+          token: ${{ secrets.ACCESS_TOKEN }}
+          artifacts: ${{ env.FIRMWARE_PATH }}/*
+          body: |
+            **This is the pre-built Armbian image for ${{ env.FIRMWARE_TAG }}**
+            - 固件路径: ${{ env.FIRMWARE_PATH }}
+            - 时间: $(date +"%Y-%m-%d %H:%M:%S")
