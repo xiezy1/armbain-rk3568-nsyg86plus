@@ -38,6 +38,7 @@ jobs:
       - name: Upload built images to release
         uses: softprops/action-gh-release@v1
         with:
+          tag_name: v1.0.0       # 这里必须是你仓库里存在的 tag
           files: armbian-build/output/images/*.img
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
