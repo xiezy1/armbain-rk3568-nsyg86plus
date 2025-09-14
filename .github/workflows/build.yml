@@ -66,7 +66,7 @@ jobs:
         uses: ncipollo/release-action@v1
         with:
           name: Armbian ${{ env.FIRMWARE_TAG }}
-          tag: ${{ env.RELEASE_TAG }}
+          tag: v1.0.0
           allowUpdates: true
           artifacts: ${{ env.ASSET }}
           body: |
