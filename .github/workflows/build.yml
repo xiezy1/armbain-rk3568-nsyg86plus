@@ -25,41 +25,7 @@ jobs:
 
       - name: Clone Armbian build scripts
         run: |
-          git clone --depth=1 https://github.com/xiezy1/build armbian-build
-
-      - name: Copy custom board config
-        run: |
-          mkdir -p armbian-build/config/boards
-          cp config/boards/nsy-g68-plus.conf armbian-build/config/boards/
-
-      - name: Copy u-boot defconfig and DTS
-        run: |
-          UB_DIR=armbian-build/cache/sources/u-boot
-          mkdir -p $UB_DIR/configs
-          mkdir -p $UB_DIR/dts
-          cp config/boards/nsy-g68-plus_defconfig $UB_DIR/configs/
-          cp userpatches/kernel/rk3568-nsy-g68-plus.dts $UB_DIR/dts/
-
-      # - name: Apply u-boot patches (optional)
-      #   run: |
-      #     # 如果你有 patch 文件，可以放在 userpatches/u-boot 下
-      #     PATCH_DIR=userpatches/u-boot
-      #     UB_DIR=armbian-build/cache/sources/u-boot-worktree/u-boot/v2022.07
-      #     if [ -d "$PATCH_DIR" ]; then
-      #       for f in $PATCH_DIR/*.patch; do
-      #         echo "Applying patch $f"
-      #         patch -p1 -d $UB_DIR < $f
-      #       done
-      #     fi
-
-      - name: Manually clone u-boot source
-        run: |
-          git clone --depth=1 -b v2022.07 https://github.com/xiezy1/u-boot.git armbian-build/cache/sources/u-boot/v2022.07
-
-      - name: Copy u-boot defconfig
-        run: |
-          cp config/boards/nsy-g68-plus_defconfig armbian-build/cache/sources/u-boot/v2022.07/configs/
-          ls -l armbian-build/cache/sources/u-boot/v2022.07/configs/
+          git clone --depth=1 https://github.com/armbian/build.git armbian-build
 
       - name: Build Armbian
         run: |
