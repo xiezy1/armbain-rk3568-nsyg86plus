@@ -9,7 +9,7 @@ env:
   FIRMWARE_RELEASE: true
   FIRMWARE_TAG: armbian-rk3568
   TZ: Asia/Shanghai
-  GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}   # 必须是 PAT，有 repo 权限
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}   # 必须是 PAT，有 repo 权限
 
 jobs:
   build:
@@ -59,7 +59,7 @@ jobs:
           name: Armbian ${FIRMWARE_TAG}
           allowUpdates: true
           tag: ${{ github.ref_name }}-${FIRMWARE_TAG}   # 使用触发的 tag
-          token: ${{ secrets.ACCESS_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}
           artifacts: ${{ env.FIRMWARE_PATH }}/*
           body: |
             **This is the pre-built Armbian image for ${{ env.FIRMWARE_TAG }}**
