@@ -58,7 +58,7 @@ jobs:
         with:
           name: Armbian ${FIRMWARE_TAG}
           allowUpdates: true
-          tag: ${{ github.ref_name }}-${FIRMWARE_TAG}   # 使用触发的 tag
+          tag: v1.0.0-${FIRMWARE_TAG}   # 使用触发的 tag
           token: ${{ secrets.GITHUB_TOKEN }}
           artifacts: ${{ env.FIRMWARE_PATH }}/*
           body: |
