@@ -52,16 +52,27 @@ jobs:
             exit 1
           fi
 
-      - name: Upload Firmware to GitHub Release
+      - name: Zip firmware (single asset)
+        if: env.FIRMWARE_RELEASE == 'true'
+        run: |
+          mkdir -p /tmp/release
+          cp -r "${{ env.FIRMWARE_PATH }}"/* /tmp/release/
+          cd /tmp && zip -r firmware.zip release
+          echo "ASSET=/tmp/firmware.zip" >> $GITHUB_ENV
+
+      # --- Option A: 使用 ncipollo/release-action（保持你原来的习惯） ---
+      - name: Upload Firmware to GitHub Release (ncipollo)
         if: env.FIRMWARE_RELEASE == 'true'
         uses: ncipollo/release-action@v1
         with:
-          name: Armbian ${FIRMWARE_TAG}
+          name: Armbian ${{ env.FIRMWARE_TAG }}
+          tag: ${{ env.RELEASE_TAG }}
           allowUpdates: true
-          tag: v1.0.0-${FIRMWARE_TAG}   # 使用触发的 tag
-          token: ${{ secrets.PUSH_RELEASE_TOKEN }}
-          artifacts: ${{ env.FIRMWARE_PATH }}/*
+          artifacts: ${{ env.ASSET }}
           body: |
             **This is the pre-built Armbian image for ${{ env.FIRMWARE_TAG }}**
             - 固件路径: ${{ env.FIRMWARE_PATH }}
             - 时间: $(date +"%Y-%m-%d %H:%M:%S")
+          token: ${{ secrets.PUSH_RELEASE_TOKEN }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.PUSH_RELEASE_TOKEN }}
