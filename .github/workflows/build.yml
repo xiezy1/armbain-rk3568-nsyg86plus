@@ -26,7 +26,9 @@ jobs:
       - name: Clone Armbian build scripts
         run: |
           git clone --depth=1 https://github.com/armbian/build.git armbian-build
-
+          cp config/boards/nsy-g68-plus.conf armbian-build/config/boards/
+          cp config/patches/0001-rockchip-add-nsy-g68-plus-support.patch armbian-build/patches/linux/rockchip/
+          cp rk3568-nsy-g68-plus-bdy_g18.dtb armbian-build/patches/linux/rockchip/dtb/
       - name: Build Armbian
         run: |
           cd armbian-build
