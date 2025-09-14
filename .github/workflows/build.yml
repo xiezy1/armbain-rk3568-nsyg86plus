@@ -37,10 +37,8 @@ jobs:
           ./compile.sh BOARD=nsy-g68-plus BRANCH=current RELEASE=bookworm \
                         BUILD_MINIMAL=no BUILD_DESKTOP=no KERNEL_CONFIGURE=no
 
-      - name: Upload built images to release
-        uses: softprops/action-gh-release@v1
+      - name: Upload existing Armbian image
+        uses: actions/upload-artifact@v4
         with:
-          tag_name: v1.0.1       # 确保 tag 不存在
-          files: armbian-build/output/images/*.img
-        env:
-          GITHUB_TOKEN: ${{ secrets.GH_PAT }}  # PAT
+          name: armbian-image
+          path: armbian-build/output/images/*.img
