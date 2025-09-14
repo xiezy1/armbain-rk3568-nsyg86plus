@@ -5,7 +5,12 @@ on:
   push:
     tags:
       - 'v*'
-
+env:
+  FIRMWARE_RELEASE: true
+  FIRMWARE_TAG: armbian-rk3568
+  TZ: Asia/Shanghai
+  GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}   # 必须是 PAT，有 repo 权限
+  
 jobs:
   build:
     runs-on: ubuntu-22.04
